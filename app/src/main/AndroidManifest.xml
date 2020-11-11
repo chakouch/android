@@ -22,6 +22,11 @@
             android:name=".AddCity"
             android:label="@string/add_city"
             android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".CityWeatherInformation"
+            android:label="@string/city_details"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

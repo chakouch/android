@@ -1,5 +1,6 @@
 package com.example.myweather.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myweather.CityWeatherInformation;
 import com.example.myweather.R;
 import com.example.myweather.beans.CityWeather;
 
@@ -33,12 +35,15 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
             displayStatus = itemView.findViewById(R.id.status);
         }
 
-        public void updateViewHolder(CityWeather city) {
+        public void updateViewHolder(final CityWeather city) {
             displayCity.setText(city.cityName);
             itemView.setOnClickListener(new View.OnClickListener()   {
                 @Override
                 public void onClick(View v)     {
+                    final Intent intent = new Intent(itemView.getContext(), CityWeatherInformation.class);
+                    intent.putExtra(CityWeatherInformation.CITY_NAME, city);
 
+                    itemView.getContext().startActivity(intent);
                 }});
         }
     }

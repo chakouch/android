@@ -40,4 +40,9 @@ public final class CityRepository {
         cityWeatherDatabases.cityWeatherDao().addCity(city);
     }
 
+    public void deleteCity(CityWeather city)
+    {
+        cityWeatherDatabases.cityWeatherDao().deleteCity(city);
+    }
+
 }
