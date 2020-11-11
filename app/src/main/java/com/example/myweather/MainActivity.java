@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.myweather.adapter.CityAdapter;
+import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 import com.example.myweather.service.CityServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,7 +21,8 @@ public class MainActivity extends AppCompatActivity   {
     private RecyclerView cityWeather;
     private FloatingActionButton addWeather;
     private TextView information;
-    private City city;
+    private CityWeather city;
+    private ImageView imageView;
     private CityServices cityServices;
     private enum OrderState {Order, NotOrder}
     private OrderState currentOrderState = OrderState.NotOrder;
@@ -32,13 +35,20 @@ public class MainActivity extends AppCompatActivity   {
         cityWeather = findViewById(R.id.cityWeather);
         addWeather = findViewById(R.id.addWeather);
         information = findViewById(R.id.information);
+        imageView = findViewById(R.id.imageView);
         cityWeather.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         cityServices = new CityServices();
-        if (cityServices.getCity() == null)
+        initList();
+        if (cityServices.getCity() == null){
             cityWeather.setVisibility(View.GONE);
-        else
+            imageView.setVisibility(View.VISIBLE);
+            information.setVisibility(View.VISIBLE);}
+        else{
             cityWeather.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
+            information.setVisibility(View.GONE);
+        }
 
         addWeather.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,13 +63,13 @@ public class MainActivity extends AppCompatActivity   {
     protected void onResume()
     {
         super.onResume();
-        if (cityServices.getCity() != null)
         initList();
     }
 
     private void initList()
     {
-        final List<City> cityList = currentOrderState == OrderState.NotOrder ? CityRepository.getInstance().getCity() : CityRepository.getInstance().sortUsersByName();
+        final List<CityWeather> cityList = CityRepository.getInstance(this).getCity();
+
         final CityAdapter cityAdapter = new CityAdapter(cityList);
         cityWeather.setAdapter(cityAdapter);
     }
