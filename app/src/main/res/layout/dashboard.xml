@@ -46,11 +46,13 @@
         app:layout_constraintTop_toBottomOf="@id/image"
         android:gravity="center"
         app:layout_constraintHorizontal_chainStyle="spread">
+
         <TextView
-            android:textSize="50sp"
-            android:text="@string/temp"
+            android:id="@+id/temp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/temp"
+            android:textSize="50sp" />
         <TextView
             android:textSize="50sp"
             android:text="@string/unit"
@@ -75,11 +77,13 @@
             android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
-            android:textSize="20sp"
-            android:text="@string/feeltemp"
+            android:id="@+id/feelTemp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/feeltemp"
+            android:textSize="20sp" />
 
         <TextView
             android:textSize="20sp"
@@ -106,17 +110,19 @@
             android:src="@drawable/ic_baseline_arrow_downward_24" />
 
         <TextView
-            android:textSize="20sp"
-            android:text="@string/min"
-            android:layout_marginEnd="5dp"
+            android:id="@+id/max"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/min"
+            android:textSize="20sp" />
 
         <TextView
-            android:textSize="20sp"
-            android:text="@string/mintemp"
+            android:id="@+id/min"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/mintemp"
+            android:textSize="20sp" />
 
         <TextView
             android:textSize="20sp"

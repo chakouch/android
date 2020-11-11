@@ -2,10 +2,12 @@ package com.example.myweather;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
 import com.example.myweather.OpenWeatherAPI.IService;
 import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
-import com.example.myweather.OpenWeatherAPI.Weather;
+import com.example.myweather.OpenWeatherAPI.WeatherResponse;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
+import com.squareup.picasso.Picasso;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -27,14 +30,28 @@ public class CityWeatherInformation extends AppCompatActivity {
 
     public static final String CITY_NAME = "cityName";
     private String city;
+    private TextView name;
+    private TextView temp;
+    private TextView feelTemp;
+    private TextView min;
+    private TextView max;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
+        name = findViewById(R.id.name);
+        temp=findViewById(R.id.temp);
+        feelTemp=findViewById(R.id.feelTemp);
+        min = findViewById(R.id.min);
+        max = findViewById(R.id.max);
+        imageView = findViewById(R.id.image);
+
         final CityWeather cityWeather = (CityWeather) getIntent().getSerializableExtra(CityWeatherInformation.CITY_NAME);
         city =cityWeather.cityName;
+        name.setText(city);
         getWeatherData(city);
         }
 
@@ -70,28 +87,33 @@ public class CityWeatherInformation extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     public void getWeatherData(String name){
 
         String apiID="455c70c40063b41bf3cf235af1d60c8d";
-        String units="455c70c40063b41bf3cf235af1d60c8d";
+        String units="metric";
         final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         final OkHttpClient okHttp = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor) .addInterceptor(new CustomInterceptor()).build();
-        IService iService = RetrofitAPIClient.getclient(okHttp).create(IService.class);
-        Call<Weather> call = iService.getWeatherData(name,apiID,units);
 
-        call.enqueue(new Callback<Weather>() {
+        IService iService = RetrofitAPIClient.getclient(okHttp).create(IService.class);
+
+        Call<WeatherResponse> call = iService.getWeatherData(name,apiID,units);
+
+        call.enqueue(new Callback<WeatherResponse>() {
             @Override
-            public void onResponse(Call<Weather> call, Response<Weather> response) {
-                final Weather weather = response.body();
-                System.out.println(weather.getTemp());
+            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+
+                temp.setText(response.body().main.temp);
+                feelTemp.setText(response.body().main.feels_like);
+                min.setText(response.body().main.tempMin);
+                max.setText(response.body().main.tempMax);
+                String imagePAth = "../res/drawable/img_"+response.body().weather.get(0).icon+".png";
+                Picasso.get().load(imagePAth).into(imageView);
             }
 
             @Override
-            public void onFailure(Call<Weather> call, Throwable t) {
-
+            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                Log.d("JPP","jvais me pendre");
             }
         });
     }
