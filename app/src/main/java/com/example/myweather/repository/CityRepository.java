@@ -42,7 +42,7 @@ public final class CityRepository {
 
     public void deleteCity(CityWeather city)
     {
-        cityWeatherDatabases.cityWeatherDao().deleteCity(city);
+        cityWeatherDatabases.cityWeatherDao().deleteByName(city.cityName);
     }
 
 }

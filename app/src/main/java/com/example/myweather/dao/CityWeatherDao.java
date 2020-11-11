@@ -18,12 +18,11 @@ public interface CityWeatherDao extends ICityService {
     @Query("SELECT * FROM CityWeather")
     List<CityWeather> getCity();
 
-
+    @Override
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addCity(CityWeather city);
 
 
-    @Delete
-    void deleteCity(CityWeather city);
+    @Query("DELETE FROM cityweather WHERE cityName = :cityName") void deleteByName(String cityName);
 
 }

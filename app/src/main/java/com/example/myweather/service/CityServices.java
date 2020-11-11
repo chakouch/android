@@ -15,7 +15,7 @@ public class CityServices implements ICityService {
     }
 
     @Override
-    public void deleteCity(CityWeather city) {
+    public void deleteByName(String city) {
         cities.remove(city);
     }
 

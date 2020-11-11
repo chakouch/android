@@ -43,7 +43,7 @@ public class CityWeatherInformation extends AppCompatActivity {
                     .setMessage("Are you sure you want to delete this city?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Weather for the city called Paris deleted", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Weather for the city called '"+ city +"' deleted", Toast.LENGTH_LONG).show();
                             CityRepository.getInstance(CityWeatherInformation.this).deleteCity(new CityWeather(city));
                             finish();
                         }
@@ -56,7 +56,6 @@ public class CityWeatherInformation extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
-
         return super.onOptionsItemSelected(item);
     }
     }

@@ -18,7 +18,7 @@ public interface ICityService {
      *
      * @param city
      */
-    void deleteCity(CityWeather city);
+    void deleteByName(String city);
 
     /**
      * Add an user
