@@ -5,4 +5,10 @@
     <string name="new_city">Add a city</string>
     <string name="message">Enter the name of the city you want to add:</string>
     <string name="add_city">City name</string>
+	<string name="city">Paris</string>
+    <string name="temp">20</string>
+    <string name="feeltemp">15</string>
+    <string name="mintemp">12</string>
+    <string name="maxtemp">21</string>
+    <string name="unit">°C</string>
 </resources>
