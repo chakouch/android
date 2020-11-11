@@ -2,7 +2,6 @@ package com.example.myweather;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -11,16 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
 import com.example.myweather.OpenWeatherAPI.IService;
 import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
 import com.example.myweather.OpenWeatherAPI.Weather;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CityWeatherInformation extends AppCompatActivity {
 
@@ -73,13 +74,19 @@ public class CityWeatherInformation extends AppCompatActivity {
 
     public void getWeatherData(String name){
 
-        IService iService = RetrofitAPIClient.getclient().create(IService.class);
-        Call<Weather> call = iService.getWeatherData(name);
+        String apiID="455c70c40063b41bf3cf235af1d60c8d";
+        String units="455c70c40063b41bf3cf235af1d60c8d";
+        final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        final OkHttpClient okHttp = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor) .addInterceptor(new CustomInterceptor()).build();
+        IService iService = RetrofitAPIClient.getclient(okHttp).create(IService.class);
+        Call<Weather> call = iService.getWeatherData(name,apiID,units);
 
         call.enqueue(new Callback<Weather>() {
             @Override
             public void onResponse(Call<Weather> call, Response<Weather> response) {
-                System.out.println( response.body().getTemp());
+                final Weather weather = response.body();
+                System.out.println(weather.getTemp());
             }
 
             @Override

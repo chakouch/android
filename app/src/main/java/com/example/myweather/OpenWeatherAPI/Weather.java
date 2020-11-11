@@ -7,16 +7,16 @@ import java.io.Serializable;
 public class Weather implements Serializable {
 
     @Json(name ="temp")
-    public String temp;
+    public final String temp;
 
     @Json(name ="feels_like")
-    public String feels_like;
+    public final String feels_like;
 
     @Json(name ="temp_min")
-    public String temp_min;
+    public final String temp_min;
 
     @Json(name ="temp_max")
-    public String temp_max;
+    public final String temp_max;
 
     public String icon;
 
