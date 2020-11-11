@@ -34,6 +34,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
         }
 
         public void updateViewHolder(CityWeather city) {
+            displayCity.setText(city.cityName);
             itemView.setOnClickListener(new View.OnClickListener()   {
                 @Override
                 public void onClick(View v)     {
