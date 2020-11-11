@@ -7,8 +7,11 @@
     <string name="add_city">City name</string>
 	<string name="city">Paris</string>
     <string name="temp">20</string>
+    <string name="feels">Feels like</string>
     <string name="feeltemp">15</string>
+    <string name="min">Min.</string>
     <string name="mintemp">12</string>
+    <string name="max">Max.</string>
     <string name="maxtemp">21</string>
     <string name="unit">°C</string>
 </resources>

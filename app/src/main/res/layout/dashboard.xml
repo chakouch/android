@@ -20,6 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
         />
 
     <ImageView
@@ -31,6 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintHorizontal_chainStyle="spread"
         />
 
     <LinearLayout
@@ -42,7 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintHorizontal_chainStyle="spread">
         <TextView
             android:textSize="50sp"
             android:text="@string/temp"
@@ -64,10 +67,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/temperature"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintHorizontal_chainStyle="spread">
         <TextView
             android:textSize="20sp"
-            android:text="feels like "
+            android:text="@string/feels"
+            android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -92,7 +97,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintHorizontal_chainStyle="spread">
 
         <ImageView
             android:layout_height="wrap_content"
@@ -101,7 +107,8 @@
 
         <TextView
             android:textSize="20sp"
-            android:text="Min. "
+            android:text="@string/min"
+            android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -114,7 +121,7 @@
         <TextView
             android:textSize="20sp"
             android:text="@string/unit"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -125,7 +132,8 @@
 
         <TextView
             android:textSize="20sp"
-            android:text="Max. "
+            android:text="@string/max"
+            android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
