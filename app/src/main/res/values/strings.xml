@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Weather</string>
+    <string name="information">Please, click on the ADD button in order to add city</string>
+    <string name="save">SAVE</string>
+    <string name="new_city">Add a city</string>
+    <string name="message">Enter the name of the city you want to add:</string>
+    <string name="add_city">City name</string>
+</resources>
