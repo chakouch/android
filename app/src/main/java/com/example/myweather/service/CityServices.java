@@ -1,31 +1,26 @@
 package com.example.myweather.service;
 
-import com.example.myweather.City;
+import com.example.myweather.beans.CityWeather;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CityServices implements ICityService {
 
-    private final List<City> city = new ArrayList<>();
+    private final List<CityWeather> cities = new ArrayList<>();
 
     @Override
-    public List<City> getCity() {
-        return null;
+    public List<CityWeather> getCity() {
+        return cities;
     }
 
     @Override
-    public void deleteCity(City city) {
-
+    public void deleteCity(CityWeather city) {
     }
 
     @Override
-    public void addCity(City city) {
-
+    public void addCity(CityWeather city) {
+        cities.add(city);
     }
 
-    @Override
-    public List<City> sortUsersByName() {
-        return null;
-    }
 }

@@ -7,16 +7,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.myweather.City;
+
 import com.example.myweather.R;
+import com.example.myweather.beans.CityWeather;
 
 import java.util.List;
 
 public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
-    private final List<City> cityList = null;
+    private final List<CityWeather> cityList;
 
-    public CityAdapter(List<City> cityList) {
+    public CityAdapter(List<CityWeather> cityList) {
+        this.cityList = cityList;
     }
 
     public final class CityViewHolder extends RecyclerView.ViewHolder {
@@ -31,8 +33,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
             displayStatus = itemView.findViewById(R.id.status);
         }
 
-        public void updateViewHolder(City city) {
-            displayCity.setText(city.name);
+        public void updateViewHolder(CityWeather city) {
             itemView.setOnClickListener(new View.OnClickListener()   {
                 @Override
                 public void onClick(View v)     {

@@ -1,6 +1,11 @@
 package com.example.myweather.repository;
 
-import com.example.myweather.City;
+import android.content.Context;
+
+import androidx.room.Room;
+
+import com.example.myweather.beans.CityWeather;
+import com.example.myweather.datebase.CityWeatherDatabases;
 import com.example.myweather.service.CityServices;
 
 import java.util.List;
@@ -8,28 +13,31 @@ import java.util.List;
 public final class CityRepository {
     private static volatile CityRepository instance;
     private final CityServices cityservices = null;
-    private String test = "Metz";
+    private CityWeatherDatabases cityWeatherDatabases;
 
-    public static CityRepository getInstance() {
+
+    public static CityRepository getInstance(Context context) {
         if (instance == null) {
             synchronized (CityRepository.class) {
                 if (instance == null)
-                 instance = new CityRepository();
+                 instance = new CityRepository(context);
             }
         }
         return instance;
     }
 
-    public String getTest() {
-        return test;
-    }
-    public List<City> getCity()
-    {
-        return cityservices.getCity();
+    private CityRepository(Context context){
+        cityWeatherDatabases = Room.databaseBuilder(context, CityWeatherDatabases.class,"city-database").allowMainThreadQueries().build();
     }
 
-    public List<City> sortUsersByName()
+    public List<CityWeather> getCity()
     {
-        return cityservices.sortUsersByName();
+        return cityWeatherDatabases.cityWeatherDao().getCity();
     }
+
+    public void addCity(CityWeather city)
+    {
+        cityWeatherDatabases.cityWeatherDao().addCity(city);
+    }
+
 }

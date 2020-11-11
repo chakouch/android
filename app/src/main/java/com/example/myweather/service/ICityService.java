@@ -1,6 +1,6 @@
 package com.example.myweather.service;
 
-import com.example.myweather.City;
+import com.example.myweather.beans.CityWeather;
 
 import java.util.List;
 
@@ -11,27 +11,20 @@ public interface ICityService {
      *
      * @return {@link List}
      */
-    List<City> getCity();
+    List<CityWeather> getCity();
 
     /**
      * Deletes an user
      *
      * @param city
      */
-    void deleteCity(City city);
+    void deleteCity(CityWeather city);
 
     /**
      * Add an user
      *
      * @param city
      */
-    void addCity(City city);
+    void addCity(CityWeather city);
 
-    /**
-     * Get all users sorted by name
-     *
-     * @return {@link List}
-     */
-
-    List<City> sortUsersByName();
 }
