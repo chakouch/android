@@ -122,12 +122,14 @@ public class CityWeatherInformation extends AppCompatActivity {
                     feelTemp.setText(response.body().main.feels_like);
                     min.setText(response.body().main.tempMin);
                     max.setText(response.body().main.tempMax);
+
+                    Log.d("WOAL",response.body().dt);
+
                     String imagePAth = response.body().weather.get(0).icon;
                     getImageWeather(imagePAth);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
             }
 
             @Override

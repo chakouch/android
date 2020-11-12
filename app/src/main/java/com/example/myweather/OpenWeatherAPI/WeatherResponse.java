@@ -20,6 +20,10 @@ public class WeatherResponse  {
     @Expose
     public Main main;
 
+    @SerializedName("dt")
+    @Expose
+    public String dt;
+
 
     public class Coord {
 
@@ -47,5 +51,6 @@ public class WeatherResponse  {
         public String icon;
 
     }
+
 
 }
