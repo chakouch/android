@@ -1,10 +1,6 @@
 package com.example.myweather;
 
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,16 +19,12 @@ import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
 import com.example.myweather.OpenWeatherAPI.WeatherResponse;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -84,18 +77,12 @@ public class CityWeatherInformation extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle("WARNINGS!")
                     .setMessage("Are you sure you want to delete this city?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Weather for the city called '"+ city +"' deleted", Toast.LENGTH_LONG).show();
-                            CityRepository.getInstance(CityWeatherInformation.this).deleteCity(new CityWeather(city));
-                            finish();
-                        }
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        Toast.makeText(getApplicationContext(), "Weather for the city called '"+ city +"' deleted", Toast.LENGTH_LONG).show();
+                        CityRepository.getInstance(CityWeatherInformation.this).deleteCity(new CityWeather(city));
+                        finish();
                     })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            dialog.cancel();
-                        }
-                    })
+                    .setNegativeButton("No", (dialog, id) -> dialog.cancel())
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
@@ -123,10 +110,9 @@ public class CityWeatherInformation extends AppCompatActivity {
                     min.setText(response.body().main.tempMin);
                     max.setText(response.body().main.tempMax);
 
-                    Log.d("WOAL",response.body().dt);
-
                     String imagePAth = response.body().weather.get(0).icon;
-                    getImageWeather(imagePAth);
+                    imageView.setImageResource(Utils.getImageWeather(imagePAth));
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -138,31 +124,4 @@ public class CityWeatherInformation extends AppCompatActivity {
             }
         });
     }
-            public void getImageWeather(String code){
-
-                Map<String, String> imageCode = new HashMap<>();
-
-                String img = null;
-                imageCode.put("0","01d");imageCode.put("1","01n");
-                imageCode.put("2","02d");imageCode.put("3","02n");
-                imageCode.put("4","03d");imageCode.put("5","03n");
-                imageCode.put("6","04d");imageCode.put("7","04n");
-                imageCode.put("8","09d");imageCode.put("9","09n");
-                imageCode.put("10","10d");imageCode.put("11","10n");
-                imageCode.put("12","11d");imageCode.put("13","11n");
-                imageCode.put("14","13d");imageCode.put("15","13n");
-                imageCode.put("16","50d");imageCode.put("17","50n");
-
-                for (Map.Entry<String,String> entry : imageCode.entrySet()){
-                    if (entry.getValue().equals(code))
-                        img = entry.getKey();
-                }
-
-                int[] imageList = new int[]{R.drawable.img_01d,R.drawable.img_01n,R.drawable.img_02d,R.drawable.img_02n,
-                        R.drawable.img_03d,R.drawable.img_03n,R.drawable.img_04d,R.drawable.img_04n,R.drawable.img_09d,
-                        R.drawable.img_09n, R.drawable.img_10d,R.drawable.img_10n,R.drawable.img_11d,R.drawable.img_11n,
-                        R.drawable.img_13d, R.drawable.img_13n, R.drawable.img_50d, R.drawable.img_50n};
-
-                imageView.setImageResource(imageList[Integer.parseInt(img)]);
-            }
-    }
+}
