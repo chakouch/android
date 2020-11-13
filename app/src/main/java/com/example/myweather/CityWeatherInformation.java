@@ -21,6 +21,7 @@ import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,7 +45,13 @@ public class CityWeatherInformation extends AppCompatActivity {
     private TextView min;
     private TextView max;
     private ImageView imageView;
-    HashMap getWeatherData;
+
+    private String nameString;
+    private String tempString;
+    private String feelTempString;
+    private String minString;
+    private String maxString;
+    private String imageViewString;
 
 
     @Override
@@ -52,17 +59,22 @@ public class CityWeatherInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
+        final CityWeather cityWeather = (CityWeather) getIntent().getSerializableExtra(CityWeatherInformation.CITY_NAME);
+
+        city =cityWeather.cityName;
         name = findViewById(R.id.name);
         temp=findViewById(R.id.temp);
         feelTemp=findViewById(R.id.feelTemp);
         min = findViewById(R.id.min);
         max = findViewById(R.id.max);
         imageView = findViewById(R.id.image);
-
-        final CityWeather cityWeather = (CityWeather) getIntent().getSerializableExtra(CityWeatherInformation.CITY_NAME);
-        city =cityWeather.cityName;
         name.setText(city);
-        getWeatherData(city);
+
+        try {
+            getWeatherData(city);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -92,11 +104,16 @@ public class CityWeatherInformation extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getWeatherData(String city){
+    public void getWeatherData(String city) throws ParseException {
 
         final List<CityWeather> cityList = CityRepository.getInstance(this).getCity();
         for (int i = 0; i < cityList.size(); i++) {
             if (cityList.get(i).cityName.equals(city)){
+                String requestTime = cityList.get(i).requestTime;
+
+                if (Utils.compareDate(requestTime) == 1){
+                    Utils.updateData(cityList.get(i).cityName, this);
+                    getWeatherData(cityList.get(i).cityName); }
 
                 temp.setText(cityList.get(i).temp);
                 feelTemp.setText(cityList.get(i).feelsLike);
@@ -107,6 +124,7 @@ public class CityWeatherInformation extends AppCompatActivity {
             }
         }
     }
+
 
 
 }

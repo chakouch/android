@@ -11,7 +11,9 @@ import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,5 +101,21 @@ public class Utils {
                 Log.d("JPP", "jvais me pendre");
             }
         });
+    }
+
+    public static Date convertStringToDate (String dateString) throws ParseException {
+        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date =formatter.parse(dateString);
+        return date;
+    }
+
+    public static int compareDate (String request) throws ParseException {
+
+        Date requestTime = convertStringToDate(request);
+        Calendar cl = Calendar. getInstance();
+        cl.setTime(requestTime);
+        cl.add(Calendar.HOUR, 10);
+        Date now = convertStringToDate(getDate());
+        return now.compareTo(cl.getTime());
     }
 }
