@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +16,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
+import com.example.myweather.OpenWeatherAPI.IService;
+import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
+import com.example.myweather.OpenWeatherAPI.WeatherResponse;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
 import java.util.HashMap;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddCity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,10 +52,14 @@ public class AddCity extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(getApplicationContext(), "Invalid city name", Toast.LENGTH_LONG).show();
         }
         else {
-
-            CityRepository.getInstance(this).addCity(new CityWeather(city));
-            Toast.makeText(getApplicationContext(), "City called '"+ city +"' added", Toast.LENGTH_LONG).show();
+            String cityBeautiful = city.substring(0, 1).toUpperCase() + city.substring(1);
+            Toast.makeText(getApplicationContext(), "City called '"+ cityBeautiful +"' added", Toast.LENGTH_LONG).show();
+            CityRepository.getInstance(AddCity.this).addCity(new CityWeather(cityBeautiful,"","","","",
+                    "",""));
             finish();
+            Utils.updateData(cityBeautiful,this);
         }
     }
+
+
 }

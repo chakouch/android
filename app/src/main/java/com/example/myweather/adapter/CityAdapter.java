@@ -37,14 +37,11 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
 
         public void updateViewHolder(final CityWeather city) {
             displayCity.setText(city.cityName);
-            itemView.setOnClickListener(new View.OnClickListener()   {
-                @Override
-                public void onClick(View v)     {
-                    final Intent intent = new Intent(itemView.getContext(), CityWeatherInformation.class);
-                    intent.putExtra(CityWeatherInformation.CITY_NAME, city);
-
-                    itemView.getContext().startActivity(intent);
-                }});
+            itemView.setOnClickListener(v -> {
+                final Intent intent = new Intent(itemView.getContext(), CityWeatherInformation.class);
+                intent.putExtra(CityWeatherInformation.CITY_NAME, city);
+                itemView.getContext().startActivity(intent);
+            });
         }
     }
 
@@ -61,7 +58,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
     }
 
     @Override
-   public int getItemCount() {
+    public int getItemCount() {
         return cityList.size();
     }
 }

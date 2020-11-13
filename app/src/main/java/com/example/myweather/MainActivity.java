@@ -42,12 +42,9 @@ public class MainActivity extends AppCompatActivity   {
         initList();
         displayList();
 
-        addWeather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddCity.class);
-                startActivity(intent);
-            }
+        addWeather.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AddCity.class);
+            startActivity(intent);
         });
     }
 
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity   {
     private void initList()
     {
         final List<CityWeather> cityList = CityRepository.getInstance(this).getCity();
-
         final CityAdapter cityAdapter = new CityAdapter(cityList);
         cityWeather.setAdapter(cityAdapter);
     }
