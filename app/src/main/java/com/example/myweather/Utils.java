@@ -1,11 +1,14 @@
 package com.example.myweather;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
 import com.example.myweather.OpenWeatherAPI.IService;
 import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
 import com.example.myweather.OpenWeatherAPI.WeatherResponse;
+import com.example.myweather.beans.CityWeather;
+import com.example.myweather.repository.CityRepository;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,9 +31,9 @@ public class Utils {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
-        lastUpdate = ("le " + dateFormat.format(date) + " à " + timeFormat.format(date));
+        lastUpdate = ( dateFormat.format(date) + " " + timeFormat.format(date));
 
-     return lastUpdate;
+        return lastUpdate;
     }
 
     public static int getImageWeather(String code){
@@ -57,6 +60,44 @@ public class Utils {
                 R.drawable.img_09n, R.drawable.img_10d,R.drawable.img_10n,R.drawable.img_11d,R.drawable.img_11n,
                 R.drawable.img_13d, R.drawable.img_13n, R.drawable.img_50d, R.drawable.img_50n};
 
-       return imageList[Integer.parseInt(img)];
+        return imageList[Integer.parseInt(img)];
+    }
+
+    public static void updateData(String name, Context context) {
+
+        final String apiID = "455c70c40063b41bf3cf235af1d60c8d";
+        final String units = "metric";
+        final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        final OkHttpClient okHttp = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).addInterceptor(new CustomInterceptor()).build();
+
+        IService iService = RetrofitAPIClient.getclient(okHttp).create(IService.class);
+        Call<WeatherResponse> call = iService.getWeatherData(name, apiID, units);
+
+        call.enqueue(new Callback<WeatherResponse>() {
+            @Override
+            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+
+                try {
+                    String temps = response.body().main.temp;
+                    String feels_like = response.body().main.feels_like;
+                    String tempMin = response.body().main.tempMin;
+                    String tempMax = response.body().main.tempMax;
+                    String icon = response.body().weather.get(0).icon;
+                    String resquestTime = Utils.getDate();
+                    CityRepository.getInstance(context).updateCity(new CityWeather(name, temps, feels_like, tempMin, tempMax,
+                            icon, resquestTime));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                Log.d("JPP", "jvais me pendre");
+            }
+        });
     }
 }

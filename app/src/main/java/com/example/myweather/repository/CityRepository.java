@@ -20,7 +20,7 @@ public final class CityRepository {
         if (instance == null) {
             synchronized (CityRepository.class) {
                 if (instance == null)
-                 instance = new CityRepository(context);
+                    instance = new CityRepository(context);
             }
         }
         return instance;
@@ -40,8 +40,14 @@ public final class CityRepository {
         cityWeatherDatabases.cityWeatherDao().addCity(city);
     }
 
+
     public void deleteCity(CityWeather city)
     {
         cityWeatherDatabases.cityWeatherDao().deleteByName(city.cityName);
+    }
+
+    public void updateCity(CityWeather city) {
+        cityWeatherDatabases.cityWeatherDao().updateCity(city.cityName,city.temp,city.feelsLike,
+                city.tempMin,city.tempMax,city.icon,city.requestTime);
     }
 }
