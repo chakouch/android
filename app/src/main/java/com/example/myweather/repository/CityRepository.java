@@ -44,5 +44,4 @@ public final class CityRepository {
     {
         cityWeatherDatabases.cityWeatherDao().deleteByName(city.cityName);
     }
-
 }

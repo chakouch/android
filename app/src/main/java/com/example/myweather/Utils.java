@@ -1,11 +1,23 @@
 package com.example.myweather;
 
+import android.util.Log;
+
+import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
+import com.example.myweather.OpenWeatherAPI.IService;
+import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
+import com.example.myweather.OpenWeatherAPI.WeatherResponse;
+
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Utils {
 
@@ -17,6 +29,7 @@ public class Utils {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
         lastUpdate = ("le " + dateFormat.format(date) + " à " + timeFormat.format(date));
+
      return lastUpdate;
     }
 

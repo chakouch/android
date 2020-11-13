@@ -43,6 +43,7 @@ public class CityWeatherInformation extends AppCompatActivity {
     private TextView min;
     private TextView max;
     private ImageView imageView;
+    HashMap getWeatherData;
 
 
     @Override
@@ -78,7 +79,7 @@ public class CityWeatherInformation extends AppCompatActivity {
                     .setTitle("WARNINGS!")
                     .setMessage("Are you sure you want to delete this city?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        Toast.makeText(getApplicationContext(), "Weather for the city called '"+ city +"' deleted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "City called '"+ city +"' deleted", Toast.LENGTH_LONG).show();
                         CityRepository.getInstance(CityWeatherInformation.this).deleteCity(new CityWeather(city));
                         finish();
                     })
@@ -90,6 +91,7 @@ public class CityWeatherInformation extends AppCompatActivity {
     }
 
     public void getWeatherData(String name){
+
 
         String apiID="455c70c40063b41bf3cf235af1d60c8d";
         String units="metric";
@@ -105,14 +107,13 @@ public class CityWeatherInformation extends AppCompatActivity {
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
 
                 try {
+
                     temp.setText(response.body().main.temp);
                     feelTemp.setText(response.body().main.feels_like);
                     min.setText(response.body().main.tempMin);
                     max.setText(response.body().main.tempMax);
-
                     String imagePAth = response.body().weather.get(0).icon;
                     imageView.setImageResource(Utils.getImageWeather(imagePAth));
-
                 }catch (Exception e){
                     e.printStackTrace();
                 }

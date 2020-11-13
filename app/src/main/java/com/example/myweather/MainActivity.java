@@ -40,15 +40,7 @@ public class MainActivity extends AppCompatActivity   {
 
         cityServices = new CityServices();
         initList();
-        if (cityServices.getCity() == null){
-            cityWeather.setVisibility(View.GONE);
-            imageView.setVisibility(View.VISIBLE);
-            information.setVisibility(View.VISIBLE);}
-        else{
-            cityWeather.setVisibility(View.VISIBLE);
-            imageView.setVisibility(View.GONE);
-            information.setVisibility(View.GONE);
-        }
+        displayList();
 
         addWeather.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +56,7 @@ public class MainActivity extends AppCompatActivity   {
     {
         super.onResume();
         initList();
+        displayList();
     }
 
     private void initList()
@@ -72,5 +65,18 @@ public class MainActivity extends AppCompatActivity   {
 
         final CityAdapter cityAdapter = new CityAdapter(cityList);
         cityWeather.setAdapter(cityAdapter);
+    }
+    public void displayList(){
+
+        if (CityRepository.getInstance(this).getCity().isEmpty() ){
+            cityWeather.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+            information.setVisibility(View.VISIBLE);}
+        else{
+            cityWeather.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
+            information.setVisibility(View.GONE);
+        }
+
     }
 }

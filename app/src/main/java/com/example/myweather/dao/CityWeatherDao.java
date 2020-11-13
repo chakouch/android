@@ -23,6 +23,6 @@ public interface CityWeatherDao extends ICityService {
     void addCity(CityWeather city);
 
 
-    @Query("DELETE FROM cityweather WHERE cityName = :cityName") void deleteByName(String cityName);
+    @Query("DELETE FROM cityweather WHERE cityName = :cityName") void deleteByName (String cityName);
 
 }

@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
+import java.util.HashMap;
+
 public class AddCity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText cityName;
@@ -39,7 +41,9 @@ public class AddCity extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(getApplicationContext(), "Invalid city name", Toast.LENGTH_LONG).show();
         }
         else {
+
             CityRepository.getInstance(this).addCity(new CityWeather(city));
+            Toast.makeText(getApplicationContext(), "City called '"+ city +"' added", Toast.LENGTH_LONG).show();
             finish();
         }
     }
