@@ -16,14 +16,13 @@ public class Utils {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
-        lastUpdate = ("le " + dateFormat.format(date) + " à " +      timeFormat.format(date));
+        lastUpdate = ("le " + dateFormat.format(date) + " à " + timeFormat.format(date));
      return lastUpdate;
     }
 
     public static int getImageWeather(String code){
 
-        //Méthode qui ne nous plait pas, nous voulons bien la réponse... :/
-
+        //Méthode qui ne nous plait pas, nous voulons bien la réponse... :
         Map<String, String> imageCode = new HashMap<>();
         String img = null;
         imageCode.put("0","01d");imageCode.put("1","01n");
@@ -38,8 +37,7 @@ public class Utils {
 
         for (Map.Entry<String,String> entry : imageCode.entrySet()){
             if (entry.getValue().equals(code))
-                img = entry.getKey();
-        }
+                img = entry.getKey(); }
 
         int[] imageList = new int[]{R.drawable.img_01d,R.drawable.img_01n,R.drawable.img_02d,R.drawable.img_02n,
                 R.drawable.img_03d,R.drawable.img_03n,R.drawable.img_04d,R.drawable.img_04n,R.drawable.img_09d,
