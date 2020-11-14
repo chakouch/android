@@ -1,8 +1,6 @@
 package com.example.myweather;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -13,27 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
-import com.example.myweather.OpenWeatherAPI.IService;
-import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
-import com.example.myweather.OpenWeatherAPI.WeatherResponse;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CityWeatherInformation extends AppCompatActivity {
 
@@ -92,7 +74,7 @@ public class CityWeatherInformation extends AppCompatActivity {
                     .setTitle("WARNINGS!")
                     .setMessage("Are you sure you want to delete this city?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        Toast.makeText(getApplicationContext(), "City called '"+ city +"' deleted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "City called '"+ city +"' deleted", Toast.LENGTH_SHORT).show();
                         CityRepository.getInstance(CityWeatherInformation.this).deleteCity(new CityWeather(city,"","","",
                                 "","",""));
                         finish();

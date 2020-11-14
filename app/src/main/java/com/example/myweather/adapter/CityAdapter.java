@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myweather.CityWeatherInformation;
 import com.example.myweather.R;
+import com.example.myweather.Utils;
 import com.example.myweather.beans.CityWeather;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
     public final class CityViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView displayCity;
+        private final TextView displayUpdateTime;
         private final ImageView displayStatus;
 
 
@@ -33,10 +36,19 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
             super(itemView);
             displayCity = itemView.findViewById(R.id.city);
             displayStatus = itemView.findViewById(R.id.status);
+            displayUpdateTime = itemView.findViewById(R.id.update);
         }
 
         public void updateViewHolder(final CityWeather city) {
             displayCity.setText(city.cityName);
+
+            String imagePAth = city.icon;
+            String updateTime = city.requestTime;
+            if (!updateTime.isEmpty()) {
+                displayStatus.setImageResource(Utils.getImageWeather(imagePAth));
+                displayUpdateTime.setText("Update : " +updateTime);
+            }
+
             itemView.setOnClickListener(v -> {
                 final Intent intent = new Intent(itemView.getContext(), CityWeatherInformation.class);
                 intent.putExtra(CityWeatherInformation.CITY_NAME, city);

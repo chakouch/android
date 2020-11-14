@@ -53,7 +53,7 @@ public class AddCity extends AppCompatActivity implements View.OnClickListener {
         }
         else {
             String cityBeautiful = city.substring(0, 1).toUpperCase() + city.substring(1);
-            Toast.makeText(getApplicationContext(), "City called '"+ cityBeautiful +"' added", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "City called '"+ cityBeautiful +"' added", Toast.LENGTH_SHORT).show();
             CityRepository.getInstance(AddCity.this).addCity(new CityWeather(cityBeautiful,"","","","",
                     "",""));
             finish();

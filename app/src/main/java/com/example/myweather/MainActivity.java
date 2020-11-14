@@ -1,13 +1,15 @@
 package com.example.myweather;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.myweather.adapter.CityAdapter;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
