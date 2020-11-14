@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface CityWeatherDao extends ICityService {
 
-    //Requêtes, interface (contrat)
+    //Requêtes de la BDD, interface (contrat)
 
     @Override
     @Query("SELECT * FROM CityWeather")

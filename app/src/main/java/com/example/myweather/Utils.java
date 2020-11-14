@@ -43,7 +43,7 @@ public class Utils {
     public static int getImageWeather(String code){
 
         //Match entre le code et l'image correspondante
-        //Méthode qui ne nous plait pas, nous voulons bien la réponse... :
+        //Méthode qui me plait pas, je veux bien la réponse... :
         Map<String, String> imageCode = new HashMap<>();
         String img = null;
         imageCode.put("0","01d");imageCode.put("1","01n");
@@ -131,7 +131,7 @@ public class Utils {
 
     public static int compareDate (String request) throws ParseException {
 
-        //Compare deux date pour le cache
+        //Compare deux dates pour le cache
         Date requestTime = convertStringToDate(request);
         Calendar cl = Calendar. getInstance();
         cl.setTime(requestTime);
