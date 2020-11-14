@@ -15,29 +15,25 @@ import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CityWeatherInformation extends AppCompatActivity {
 
     public static final String CITY_NAME = "cityName";
     private String city;
     private TextView name;
-    private TextView temp;
+    public TextView temp;
     private TextView feelTemp;
     private TextView min;
     private TextView max;
     private ImageView imageView;
 
-    private String nameString;
-    private String tempString;
-    private String feelTempString;
-    private String minString;
-    private String maxString;
-    private String imageViewString;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Initialisation de la vue
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
@@ -62,21 +58,25 @@ public class CityWeatherInformation extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        //Menu "icone poubelle"
         getMenuInflater().inflate(R.menu.menu_add_city, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
+        //Boite de dialogue lors de la suppression
         if (item.getItemId() == R.id.trash)
         {
             new AlertDialog.Builder(this)
                     .setTitle("WARNINGS!")
                     .setMessage("Are you sure you want to delete this city?")
                     .setPositiveButton("Yes", (dialog, which) -> {
+                        //message plus supression de la ville dans la base en fonction du nom
                         Toast.makeText(getApplicationContext(), "City called '"+ city +"' deleted", Toast.LENGTH_SHORT).show();
                         CityRepository.getInstance(CityWeatherInformation.this).deleteCity(new CityWeather(city,"","","",
                                 "","",""));
+                        //Retour sur l'activité parent
                         finish();
                     })
                     .setNegativeButton("No", (dialog, id) -> dialog.cancel())
@@ -88,25 +88,37 @@ public class CityWeatherInformation extends AppCompatActivity {
 
     public void getWeatherData(String city) throws ParseException {
 
+        //Récupération de l'heure de requête dans la base
         final List<CityWeather> cityList = CityRepository.getInstance(this).getCity();
         for (int i = 0; i < cityList.size(); i++) {
             if (cityList.get(i).cityName.equals(city)){
                 String requestTime = cityList.get(i).requestTime;
 
+                //Vérification de l'heure
                 if (Utils.compareDate(requestTime) == 1){
-                    Utils.updateData(cityList.get(i).cityName, this);
-                    getWeatherData(cityList.get(i).cityName); }
+                    Utils.updateData(cityList.get(i).cityName, CityWeatherInformation.this);
+                }
 
-                temp.setText(cityList.get(i).temp);
-                feelTemp.setText(cityList.get(i).feelsLike);
-                min.setText(cityList.get(i).tempMin);
-                max.setText(cityList.get(i).tempMin);
-                String imagePAth = cityList.get(i).icon;
-                imageView.setImageResource(Utils.getImageWeather(imagePAth));
+                Map<String, String> weatherInformation = new HashMap<>();
+                weatherInformation.put("temp",cityList.get(i).temp);
+                weatherInformation.put("feelTemp",cityList.get(i).feelsLike);
+                weatherInformation.put("min",cityList.get(i).tempMin);
+                weatherInformation.put("max",cityList.get(i).tempMax);
+                weatherInformation.put("icon",cityList.get(i).icon);
+
+                refreshScreen((HashMap<String, String>) weatherInformation);
             }
         }
     }
 
+    public void refreshScreen(HashMap<String ,String> weatherInformation){
 
-
+        //Affichage des données
+        temp.setText(weatherInformation.get("temp"));
+        feelTemp.setText(weatherInformation.get("feelTemp"));
+        min.setText(weatherInformation.get("min"));
+        max.setText(weatherInformation.get("max"));
+        String imagePAth = weatherInformation.get("icon");
+        imageView.setImageResource(Utils.getImageWeather(imagePAth));
+    }
 }

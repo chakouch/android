@@ -26,8 +26,10 @@ import retrofit2.Response;
 
 public class Utils {
 
-    public static String getDate() {
+    //Class extérieur, opération utilitaires --> maintenance
 
+    public static String getDate() {
+        //Retourne date et heure actuel
         String lastUpdate;
         DateFormat dateFormat;
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -40,6 +42,7 @@ public class Utils {
 
     public static int getImageWeather(String code){
 
+        //Match entre le code et l'image correspondante
         //Méthode qui ne nous plait pas, nous voulons bien la réponse... :
         Map<String, String> imageCode = new HashMap<>();
         String img = null;
@@ -67,6 +70,7 @@ public class Utils {
 
     public static void updateData(String name, Context context) {
 
+        //Appelle de l'API
         final String apiID = "455c70c40063b41bf3cf235af1d60c8d";
         final String units = "metric";
         final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
@@ -78,6 +82,7 @@ public class Utils {
         IService iService = RetrofitAPIClient.getclient(okHttp).create(IService.class);
         Call<WeatherResponse> call = iService.getWeatherData(name, apiID, units);
 
+        //CallBack donc --> dernière opération
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
@@ -89,8 +94,22 @@ public class Utils {
                     String tempMax = response.body().main.tempMax;
                     String icon = response.body().weather.get(0).icon;
                     String resquestTime = Utils.getDate();
+
+                    //Mise à jour de la base
                     CityRepository.getInstance(context).updateCity(new CityWeather(name, temps, feels_like, tempMin, tempMax,
                             icon, resquestTime));
+
+                    Map<String, String> weatherInformation = new  HashMap<String, String >();
+                    weatherInformation.put("temp",temps);
+                    weatherInformation.put("feelTemp",feels_like);
+                    weatherInformation.put("min",tempMin);
+                    weatherInformation.put("max",tempMax);
+                    weatherInformation.put("icon",icon);
+
+                    //Mise à jour de la vue (CityWeatherInformation)
+                    CityWeatherInformation cityWeatherInformation = (CityWeatherInformation) context;
+                    cityWeatherInformation.refreshScreen((HashMap<String, String>) weatherInformation);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -104,6 +123,7 @@ public class Utils {
     }
 
     public static Date convertStringToDate (String dateString) throws ParseException {
+        //Converti String en date
         SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date =formatter.parse(dateString);
         return date;
@@ -111,11 +131,14 @@ public class Utils {
 
     public static int compareDate (String request) throws ParseException {
 
+        //Compare deux date pour le cache
         Date requestTime = convertStringToDate(request);
         Calendar cl = Calendar. getInstance();
         cl.setTime(requestTime);
-        cl.add(Calendar.HOUR, 10);
+        cl.add(Calendar.HOUR, 1);
+        Date before = cl.getTime();
         Date now = convertStringToDate(getDate());
-        return now.compareTo(cl.getTime());
+        int a = now.compareTo(before);
+        return a;
     }
 }

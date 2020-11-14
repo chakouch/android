@@ -9,6 +9,8 @@ import java.io.Serializable;
 @Entity
 public class CityWeather implements Serializable {
 
+ //Définition des colonnes de la BDD
+
  @PrimaryKey(autoGenerate = true) public int id;
  @NonNull public String cityName;
  @NonNull public String temp;

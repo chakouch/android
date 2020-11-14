@@ -7,6 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitAPIClient {
 
+
+    //Définition du convertisseur JSON
     private static Retrofit retrofit = null;
 
      public static Retrofit getclient(OkHttpClient okHttpClient){

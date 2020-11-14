@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity   {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Initialisation de la vue
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         cityWeather = findViewById(R.id.cityWeather);
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity   {
     @Override
     protected void onResume()
     {
+        //Cycle de vie de l'application retour sur le parent
         super.onResume();
         initList();
         displayList();
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity   {
     }
     public void displayList(){
 
+        //Affiche le background ou la liste
         if (CityRepository.getInstance(this).getCity().isEmpty() ){
             cityWeather.setVisibility(View.GONE);
             imageView.setVisibility(View.VISIBLE);

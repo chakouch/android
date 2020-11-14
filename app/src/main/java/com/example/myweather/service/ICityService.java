@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ICityService {
 
+
+    //Interface, contrat défini
     /**
      * Get all users
      *

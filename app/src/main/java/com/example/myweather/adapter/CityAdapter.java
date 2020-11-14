@@ -19,6 +19,8 @@ import java.util.List;
 
 public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
+
+    //Adaptater pour bind vue et data (RecyclerView)
     private final List<CityWeather> cityList;
 
     public CityAdapter(List<CityWeather> cityList) {
@@ -40,8 +42,9 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
         }
 
         public void updateViewHolder(final CityWeather city) {
-            displayCity.setText(city.cityName);
 
+            //Mise à jour de des données
+            displayCity.setText(city.cityName);
             String imagePAth = city.icon;
             String updateTime = city.requestTime;
             if (!updateTime.isEmpty()) {

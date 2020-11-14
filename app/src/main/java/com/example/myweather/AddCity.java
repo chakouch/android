@@ -38,6 +38,7 @@ public class AddCity extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //Initialisation de la vue
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_city);
         cityName = findViewById(R.id.city);
@@ -49,9 +50,11 @@ public class AddCity extends AppCompatActivity implements View.OnClickListener {
 
         String city = String.valueOf(cityName.getText());
         if (TextUtils.isEmpty(city)){
+            //Vérification entrée non vide
             Toast.makeText(getApplicationContext(), "Invalid city name", Toast.LENGTH_LONG).show();
         }
         else {
+            //Ajout simple de la ville
             String cityBeautiful = city.substring(0, 1).toUpperCase() + city.substring(1);
             Toast.makeText(getApplicationContext(), "City called '"+ cityBeautiful +"' added", Toast.LENGTH_SHORT).show();
             CityRepository.getInstance(AddCity.this).addCity(new CityWeather(cityBeautiful,"","","","",

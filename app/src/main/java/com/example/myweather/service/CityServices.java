@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CityServices implements ICityService {
 
+    //Liste des services proposés sur les données
     private final List<CityWeather> cities = new ArrayList<>();
 
     @Override

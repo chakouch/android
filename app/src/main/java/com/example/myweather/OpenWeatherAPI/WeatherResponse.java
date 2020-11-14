@@ -8,6 +8,8 @@ import java.util.List;
 
 public class WeatherResponse  {
 
+    //Réponse du JSON lors de l'appelle de L'API
+
     @SerializedName("coord")
     @Expose
     public Coord coord;

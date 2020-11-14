@@ -11,6 +11,8 @@ import com.example.myweather.service.CityServices;
 import java.util.List;
 
 public final class CityRepository {
+
+    //Gestion des données et utilisation du design patern singleton (Instance unique)
     private static volatile CityRepository instance;
     private final CityServices cityservices = null;
     private CityWeatherDatabases cityWeatherDatabases;
