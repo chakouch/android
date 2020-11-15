@@ -68,62 +68,6 @@ public class Utils {
         return imageList[Integer.parseInt(img)];
     }
 
-    public static void updateData(String name, Context context) {
-
-
-        //Appelle de l'API
-        final String apiID = "455c70c40063b41bf3cf235af1d60c8d";
-        final String units = "metric";
-        final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        final OkHttpClient okHttp = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).addInterceptor(new CustomInterceptor()).build();
-
-        IService iService = RetrofitAPIClient.getclient(okHttp).create(IService.class);
-        Call<WeatherResponse> call = iService.getWeatherData(name, apiID, units);
-
-        //CallBack donc --> dernière opération
-        call.enqueue(new Callback<WeatherResponse>() {
-            @Override
-            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-
-                try {
-                    String temps = response.body().main.temp;
-                    String feels_like = response.body().main.feels_like;
-                    String tempMin = response.body().main.tempMin;
-                    String tempMax = response.body().main.tempMax;
-                    String icon = response.body().weather.get(0).icon;
-                    String resquestTime = Utils.getDate();
-
-                    //Mise à jour de la base
-                    CityRepository.getInstance(context).updateCity(new CityWeather(name, temps, feels_like, tempMin, tempMax,
-                            icon, resquestTime));
-
-                    Map<String, String> weatherInformation = new  HashMap<String, String >();
-                    weatherInformation.put("temp",temps);
-                    weatherInformation.put("feelTemp",feels_like);
-                    weatherInformation.put("min",tempMin);
-                    weatherInformation.put("max",tempMax);
-                    weatherInformation.put("icon",icon);
-
-
-                    //Mise à jour de la vue (CityWeatherInformation)
-                    CityWeatherInformation cityWeatherInformation = (CityWeatherInformation) context;
-                    cityWeatherInformation.refreshScreen((HashMap<String, String>) weatherInformation);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<WeatherResponse> call, Throwable t) {
-                Log.d("JPP", "jvais me pendre");
-            }
-        });
-    }
-
 
     public static Date convertStringToDate (String dateString) throws ParseException {
         //Converti String en date

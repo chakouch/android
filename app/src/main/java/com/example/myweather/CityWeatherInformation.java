@@ -97,7 +97,6 @@ public class CityWeatherInformation extends AppCompatActivity {
 
                 //Vérification de l'heure
                 if (Utils.compareDate(requestTime) == 1){
-                 //   Utils.updateData(cityList.get(i).cityName, CityWeatherInformation.this);
                     new GetWeatherData(cityList.get(i).cityName,this, GetWeatherData.Status.UPDATE);
                 }
 
@@ -115,7 +114,7 @@ public class CityWeatherInformation extends AppCompatActivity {
 
     public void refreshScreen(HashMap<String ,String> weatherInformation){
 
-        //Affichage des données
+        //Affichage des données de la vue
         temp.setText(weatherInformation.get("temp"));
         feelTemp.setText(weatherInformation.get("feelTemp"));
         min.setText(weatherInformation.get("min"));
