@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myweather.OpenWeatherAPI.CustomInterceptor;
+import com.example.myweather.OpenWeatherAPI.GetWeatherData;
 import com.example.myweather.OpenWeatherAPI.IService;
 import com.example.myweather.OpenWeatherAPI.RetrofitAPIClient;
 import com.example.myweather.OpenWeatherAPI.WeatherResponse;
@@ -34,6 +35,7 @@ import retrofit2.Response;
 public class AddCity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText cityName;
+    private String city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,21 +50,28 @@ public class AddCity extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        String city = String.valueOf(cityName.getText());
+         city = String.valueOf(cityName.getText());
         if (TextUtils.isEmpty(city)){
             //Vérification entrée non vide
             Toast.makeText(getApplicationContext(), "Invalid city name", Toast.LENGTH_LONG).show();
         }
         else {
-            //Ajout simple de la ville
-            String cityBeautiful = city.substring(0, 1).toUpperCase() + city.substring(1);
-            Toast.makeText(getApplicationContext(), "City called '"+ cityBeautiful +"' added", Toast.LENGTH_SHORT).show();
-            CityRepository.getInstance(AddCity.this).addCity(new CityWeather(cityBeautiful,"","","","",
-                    "",""));
-            finish();
-            Utils.updateData(cityBeautiful,this);
+            //Ajout  de la ville
+            new GetWeatherData(city,this, GetWeatherData.Status.ADD);
         }
     }
 
+    public void addCity(HashMap<String ,String> weatherInformation){
+        String cityBeautiful = city.substring(0, 1).toUpperCase() + city.substring(1);
+        Toast.makeText(getApplicationContext(), "City called '"+ cityBeautiful +"' added", Toast.LENGTH_SHORT).show();
+        CityRepository.getInstance(AddCity.this).addCity(new CityWeather(cityBeautiful,weatherInformation.get("temp"),weatherInformation.get("feelTemp"),
+                weatherInformation.get("min"),weatherInformation.get("max"), weatherInformation.get("icon"),Utils.getDate()));
+        finish();
+    }
+
+    public void failToAddCity(){
+        //Vérifie si la ville EXISTE !
+        Toast.makeText(getApplicationContext(), "Invalid city name", Toast.LENGTH_LONG).show();
+    }
 
 }

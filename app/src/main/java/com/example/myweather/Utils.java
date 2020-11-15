@@ -70,6 +70,7 @@ public class Utils {
 
     public static void updateData(String name, Context context) {
 
+
         //Appelle de l'API
         final String apiID = "455c70c40063b41bf3cf235af1d60c8d";
         final String units = "metric";
@@ -106,6 +107,7 @@ public class Utils {
                     weatherInformation.put("max",tempMax);
                     weatherInformation.put("icon",icon);
 
+
                     //Mise à jour de la vue (CityWeatherInformation)
                     CityWeatherInformation cityWeatherInformation = (CityWeatherInformation) context;
                     cityWeatherInformation.refreshScreen((HashMap<String, String>) weatherInformation);
@@ -121,6 +123,7 @@ public class Utils {
             }
         });
     }
+
 
     public static Date convertStringToDate (String dateString) throws ParseException {
         //Converti String en date

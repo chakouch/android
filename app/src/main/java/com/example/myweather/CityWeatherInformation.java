@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myweather.OpenWeatherAPI.GetWeatherData;
 import com.example.myweather.beans.CityWeather;
 import com.example.myweather.repository.CityRepository;
 
@@ -96,7 +97,8 @@ public class CityWeatherInformation extends AppCompatActivity {
 
                 //Vérification de l'heure
                 if (Utils.compareDate(requestTime) == 1){
-                    Utils.updateData(cityList.get(i).cityName, CityWeatherInformation.this);
+                 //   Utils.updateData(cityList.get(i).cityName, CityWeatherInformation.this);
+                    new GetWeatherData(cityList.get(i).cityName,this, GetWeatherData.Status.UPDATE);
                 }
 
                 Map<String, String> weatherInformation = new HashMap<>();

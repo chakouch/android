@@ -47,7 +47,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityView
             displayCity.setText(city.cityName);
             String imagePAth = city.icon;
             String updateTime = city.requestTime;
-            if (!updateTime.isEmpty()) {
+            if (!imagePAth.isEmpty()) {
                 displayStatus.setImageResource(Utils.getImageWeather(imagePAth));
                 displayUpdateTime.setText("Update : " +updateTime);
             }

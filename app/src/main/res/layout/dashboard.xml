@@ -11,10 +11,10 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:text="@string/city"
-        android:textSize="100sp"
+        app:autoSizeTextType="uniform"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/image"
         app:layout_constraintEnd_toEndOf="parent"
